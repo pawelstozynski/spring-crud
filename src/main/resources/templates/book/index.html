@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/main.html">
+<head>
+</head>
+<body>
+	<div class="container" layout:fragment="content">
+		<br /><br />
+	
+		<a class="btn btn-primary" th:href="@{/book/create}">Add new</a>
+
+		<br /><br />
+
+		<table class="table">
+			<thead class="thead-light">
+				<tr>
+					<th>Id</th>
+					<th>Title</th>
+					<th>Author</th>
+					<th>Pages</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="book : ${bookList}">
+					<td th:text="${book.id}"></td>
+					<td th:text="${book.title}"></td>
+					<td th:text="${book.author}"></td>
+					<td th:text="${book.pages}"></td>
+					<td>
+						<a class="btn btn-warning" th:href="@{/book/edit/} + ${book.id}">Edit</a>
+					</td>
+					<td>
+						<form th:action="@{/book/} + ${book.id}" th:method="DELETE">
+							<button class="btn btn-danger">Delete</button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
