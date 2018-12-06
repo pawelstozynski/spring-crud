@@ -17,7 +17,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class BookEntity {
+public class Book {
 
 	@Id
 	@GeneratedValue
@@ -35,7 +35,7 @@ public class BookEntity {
 	@Min(value=1, message="Must be greater than 0")
 	private Integer pages;
 	
-	public BookEntity(String title, String author, int pages) {
+	public Book(String title, String author, int pages) {
 		this.title = title;
 		this.author = author;
 		this.pages = pages;

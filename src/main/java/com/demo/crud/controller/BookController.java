@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
-import com.demo.crud.entity.BookEntity;
+import com.demo.crud.entity.Book;
 import com.demo.crud.exception.ResourceNotFoundException;
 import com.demo.crud.service.BookService;
 
@@ -30,14 +30,15 @@ public class BookController {
 	}
 	
 	@GetMapping(path = "book/create")
-	public String createBook(@ModelAttribute("book") BookEntity book) {
+	public String createBook(Model model) {
+		model.addAttribute("book", new Book());
 		return "book/create";
 	}
 
 	@PostMapping(path = "book/create")
-	public String createBook(@Valid @ModelAttribute("book") BookEntity book, BindingResult bindingResult) {
+	public String createBook(@Valid @ModelAttribute Book book, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return "book/create";
+			return null;
 		}
 
 		bookService.createBook(book);
@@ -45,8 +46,8 @@ public class BookController {
 	}
 	
 	@GetMapping(path="book/edit/{id}")
-	public String updateBook(@PathVariable long id, Model model) {
-		BookEntity book = bookService.getBook(id);
+	public String editBook(@PathVariable long id, Model model) {
+		Book book = bookService.getBook(id);
 		if (book == null) {
 			throw new ResourceNotFoundException();
 		}
@@ -55,7 +56,7 @@ public class BookController {
 	}
 	
 	@PutMapping(path="book/edit/{id}")
-	public String updateBook(@PathVariable long id, @Valid @ModelAttribute("book") BookEntity book, BindingResult bindingResult, Model model) {
+	public String editBook(@PathVariable long id, @Valid @ModelAttribute Book book, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return "book/edit";
 		}
